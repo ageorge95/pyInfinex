@@ -168,3 +168,22 @@ class PrivateSpot():
                         added_url=added_url,
                         data=return_data(),
                         max_retries=max_retries).send()
+
+    @check_API_key
+    def cancel_order(self,
+                     obid: int,
+                     max_retries: int = 1):
+        '''
+        Will cancel an order based on the order ID
+        :param obid:
+        :param max_retries:
+        :return:
+        '''
+
+        added_url = r'spot/open_orders/cancel'
+
+        return API_call(base_url=self.base_endpoint,
+                        added_url=added_url,
+                        data={'api_key': self.API_key,
+                              'obid': obid},
+                        max_retries=max_retries).send()

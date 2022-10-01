@@ -38,3 +38,6 @@ if __name__ == '__main__':
     #                               type='LIMIT',
     #                               amount='1030',
     #                               price='0.00049'))
+
+    # cancel an order based on the order ID
+    # pprint(API_obj.cancel_order(obid=27863))
