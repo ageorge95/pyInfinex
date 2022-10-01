@@ -1,7 +1,7 @@
 from logging import getLogger
 from typing import AnyStr
-from network_wrappers import API_call
-from utils import check_API_key
+from .network_wrappers import API_call
+from .utils import check_API_key
 
 class PublicSpot():
     _log: getLogger

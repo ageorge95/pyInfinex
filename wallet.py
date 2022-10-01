@@ -1,6 +1,6 @@
 from logging import getLogger
 from typing import AnyStr
-from network_wrappers import API_call
+from .network_wrappers import API_call
 
 class PublicWallet():
     _log: getLogger
