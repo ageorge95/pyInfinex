@@ -24,6 +24,13 @@ class PrivateSpot():
     def my_open_orders(self,
                        max_retries: int = 1,
                        filter_pair: AnyStr = None):
+        '''
+        Will return ALL opened orders for an API key or just
+         the opened orders for a certain trading pair.
+        :param max_retries:
+        :param filter_pair:
+        :return:
+        '''
 
         added_url = r'spot/open_orders'
         max_response_len = 50
