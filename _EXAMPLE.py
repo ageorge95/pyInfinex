@@ -23,4 +23,6 @@ if __name__ == '__main__':
     # return all open orders
     # pprint(API_obj.my_open_orders())
     # return open orders for just 1 pair
-    pprint(API_obj.my_open_orders(filter_pair='BPX/USDT'))
+    # pprint(API_obj.my_open_orders(filter_pair='BPX/USDT'))
+    # return the full orders history
+    pprint(API_obj.my_orders_history())

@@ -63,3 +63,46 @@ class PrivateSpot():
                     return response
             else:
                 return response
+
+    def my_orders_history(self,
+                          max_retries: int = 1,
+                          filter_pair: AnyStr = None):
+        '''
+        Will return ALL the orders history for an API key or just
+         the orders history for a certain trading pair.
+        :param max_retries:
+        :param filter_pair:
+        :return:
+        '''
+
+        added_url = r'spot/orders_history'
+        max_response_len = 50
+
+        def return_data(offset):
+            to_return = {'offset': offset,
+                         'api_key': self.API_key}
+            if filter_pair:
+                to_return['filter_pair'] = filter_pair
+            return to_return
+
+        orders = []
+
+        while True:
+            offset = 0
+            response = API_call(base_url=self.base_endpoint,
+                                added_url=added_url,
+                                data=return_data(offset),
+                                max_retries=max_retries).send()
+            if response['API_call_success']:
+                if response['data']['success']:
+                    current_orders = response['data']['orders']
+                    orders += current_orders
+                    if len(current_orders) >= max_response_len:
+                        offset += max_response_len
+                    else:
+                        response['data']['orders'] = orders
+                        return response
+                else:
+                    return response
+            else:
+                return response
