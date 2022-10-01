@@ -1,4 +1,5 @@
 from logger import configure_logger
+from os import getenv
 from pyVayamos import pyVayamos
 
 if __name__ == '__main__':
@@ -14,5 +15,5 @@ if __name__ == '__main__':
     # TBD
 
     # private spot examples
-    API_obj = pyVayamos(API_key='')
+    API_obj = pyVayamos(getenv('VAYAMOS_API_KEY'))
     API_obj.my_open_orders()
