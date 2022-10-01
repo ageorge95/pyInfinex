@@ -22,9 +22,9 @@ class PublicWallet():
         max_response_len = 50
 
         assets = {}
+        offset = 0
 
         while True:
-            offset = 0
             response = API_call(base_url=self.base_endpoint,
                                 added_url=added_url,
                                 data={'offset': offset},
@@ -34,7 +34,10 @@ class PublicWallet():
                     current_assets = response['data']['assets']
                     assets.update(current_assets)
                     if len(current_assets) >= max_response_len:
+
                         offset += max_response_len
+                        self._log.info(f'Increased the offset to {offset}')
+
                     else:
                         response['data']['assets'] = assets
                         return response

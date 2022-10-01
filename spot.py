@@ -43,9 +43,9 @@ class PrivateSpot():
             return to_return
 
         orders = []
+        offset = 0
 
         while True:
-            offset = 0
             response = API_call(base_url=self.base_endpoint,
                                 added_url=added_url,
                                 data=return_data(offset),
@@ -55,7 +55,10 @@ class PrivateSpot():
                     current_orders = response['data']['orders']
                     orders += current_orders
                     if len(current_orders) >= max_response_len:
+
                         offset += max_response_len
+                        self._log.info(f'Increased the offset to {offset}')
+
                     else:
                         response['data']['orders'] = orders
                         return response
@@ -86,9 +89,9 @@ class PrivateSpot():
             return to_return
 
         orders = []
+        offset = 0
 
         while True:
-            offset = 0
             response = API_call(base_url=self.base_endpoint,
                                 added_url=added_url,
                                 data=return_data(offset),
@@ -98,7 +101,10 @@ class PrivateSpot():
                     current_orders = response['data']['orders']
                     orders += current_orders
                     if len(current_orders) >= max_response_len:
+
                         offset += max_response_len
+                        self._log.info(f'Increased the offset to {offset}')
+
                     else:
                         response['data']['orders'] = orders
                         return response
