@@ -1,6 +1,7 @@
 from logging import getLogger
 from typing import AnyStr
 from network_wrappers import API_call
+from utils import check_API_key
 
 class PublicSpot():
     _log: getLogger
@@ -8,6 +9,17 @@ class PublicSpot():
 
     def __init__(self):
         super(PublicSpot, self).__init__()
+
+    def aggregated_order_book(self,
+                              pair,
+                              max_retries: int = 1,):
+
+        added_url = r'spot/orderbook'
+
+        return API_call(base_url=self.base_endpoint,
+                        added_url=added_url,
+                        data={'pair': pair},
+                        max_retries=max_retries).send()
 
 class PrivateSpot():
     _log: getLogger
@@ -17,10 +29,7 @@ class PrivateSpot():
     def __init__(self):
         super(PrivateSpot, self).__init__()
 
-        if not self.API_key:
-            self._log.error('This method requires an API key !')
-            return
-
+    @check_API_key
     def my_open_orders(self,
                        max_retries: int = 1,
                        filter_pair: AnyStr = None):
@@ -67,6 +76,7 @@ class PrivateSpot():
             else:
                 return response
 
+    @check_API_key
     def my_orders_history(self,
                           max_retries: int = 1,
                           filter_pair: AnyStr = None):
@@ -113,6 +123,7 @@ class PrivateSpot():
             else:
                 return response
 
+    @check_API_key
     def post_new_order(self,
                        pair: AnyStr,
                        side: AnyStr,

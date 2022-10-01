@@ -13,14 +13,15 @@ if __name__ == '__main__':
     # pprint(API_obj.assets_list())
 
     # ########### public spot examples ###########
-    # TBD
+    # aggregated order book for BPX/USDT
+    # pprint(API_obj.aggregated_order_book(pair='BPX/USDT'))
 
     # ########### private wallet examples ###########
     # TBD
 
     # ########### private spot examples ###########
     # initialize the APi wrapper
-    API_obj = pyVayamos(getenv('VAYAMOS_API_KEY'))
+    # API_obj = pyVayamos(getenv('VAYAMOS_API_KEY'))
 
     # return all open orders
     # pprint(API_obj.my_open_orders())
@@ -32,8 +33,8 @@ if __name__ == '__main__':
     # pprint(API_obj.my_orders_history())
 
     # post a SELL order for 1030BPX at 0.00049USDT per BPX
-    # print(API_obj.post_new_order(pair='BPX/USDT',
-    #                              side='SELL',
-    #                              type='LIMIT',
-    #                              amount='1030',
-    #                              price='0.00049'))
+    # pprint(API_obj.post_new_order(pair='BPX/USDT',
+    #                               side='SELL',
+    #                               type='LIMIT',
+    #                               amount='1030',
+    #                               price='0.00049'))
