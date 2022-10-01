@@ -112,3 +112,48 @@ class PrivateSpot():
                     return response
             else:
                 return response
+
+    def post_new_order(self,
+                       pair: AnyStr,
+                       side: AnyStr,
+                       type: AnyStr,
+                       price: AnyStr = None,
+                       amount: AnyStr = None,
+                       total: AnyStr = None,
+                       time_in_force: AnyStr = 'GTC',
+                       max_retries: int = 1):
+
+        added_url = r'spot/open_orders/new'
+
+        def return_data():
+            to_return = {'api_key': self.API_key,
+                         'pair': pair,
+                         'side': side,
+                         'type': type,
+                         'time_in_force': time_in_force}
+            # some sanity checks
+            if price and type == 'MARKET':
+                self._log.error(f"You specified a price and a MARKET type order. That does not make sense."
+                                f" Please review the call parameters.")
+                return {}
+
+            if total and amount:
+                self._log.error(f"You specified both a total and an amount. That does not make sense."
+                                f" Please review the call parameters.")
+                return {}
+
+            if price and type in ['LIMIT', 'STOP_LIMIT']:
+                to_return['price'] = price
+
+            if total:
+                to_return['total'] = total
+
+            if amount:
+                to_return['amount'] = amount
+
+            return to_return
+
+        return API_call(base_url=self.base_endpoint,
+                        added_url=added_url,
+                        data=return_data(),
+                        max_retries=max_retries).send()
