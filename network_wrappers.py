@@ -20,7 +20,7 @@ class API_call():
         current_retry = 0
         while current_retry < self.max_retries:
             try:
-                return {'API_call_success': False,
+                return {'API_call_success': True,
                         'data': get(self.final_URL,
                                     json=self.data).json()}
             except:
