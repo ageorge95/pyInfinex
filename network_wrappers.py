@@ -11,7 +11,7 @@ class API_call():
                  max_retries: int = 1):
 
         self._log = getLogger()
-        self.final_URL = base_url + '\\' + added_url
+        self.final_URL = base_url + '/' + added_url
         self.max_retries = max_retries
         self.data = data
 
