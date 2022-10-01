@@ -50,7 +50,7 @@ class PrivateSpot():
                     if len(current_orders) >= max_response_len:
                         offset += max_response_len
                     else:
-                        response['data']['assets'] = orders
+                        response['data']['orders'] = orders
                         return response
                 else:
                     return response
