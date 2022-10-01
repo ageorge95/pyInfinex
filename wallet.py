@@ -46,6 +46,7 @@ class PublicWallet():
 class PrivateWallet():
     _log: getLogger
     base_endpoint: AnyStr
+    API_key: AnyStr
 
     def __init__(self):
         super(PrivateWallet, self).__init__()
