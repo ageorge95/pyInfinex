@@ -17,7 +17,14 @@ if __name__ == '__main__':
     # pprint(API_obj.aggregated_order_book(pair='BPX/USDT'))
 
     # ########### private wallet examples ###########
-    # TBD
+    # initialize the APi wrapper
+    # API_obj = pyVayamos(getenv('VAYAMOS_API_KEY'))
+
+    # get all the balances
+    # pprint(API_obj.wallet_balances())
+
+    # get a certain asset balance
+    # pprint(API_obj.wallet_balances(search='BPX'))
 
     # ########### private spot examples ###########
     # initialize the APi wrapper
