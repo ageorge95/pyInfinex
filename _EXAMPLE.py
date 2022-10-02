@@ -39,6 +39,9 @@ if __name__ == '__main__':
     # return the full orders history
     # pprint(API_obj.my_orders_history())
 
+    # return the filtered orders history
+    # pprint(API_obj.my_orders_history(filter_pair='BPX/USDT'))
+
     # post a SELL order for 1030BPX at 0.00049USDT per BPX
     # pprint(API_obj.post_new_order(pair='BPX/USDT',
     #                               side='SELL',
@@ -47,4 +50,11 @@ if __name__ == '__main__':
     #                               price='0.00049'))
 
     # cancel an order based on the order ID
-    # pprint(API_obj.cancel_order(obid=27863))
+    # pprint(API_obj.cancel_order(obid=29033))
+
+    # get the id of an open order
+    # pprint(API_obj.double_check_post_order(pair='BPX/USDT',
+    #                                        side='SELL',
+    #                                        type='LIMIT',
+    #                                        amount='1030',
+    #                                        price='0.00049'))

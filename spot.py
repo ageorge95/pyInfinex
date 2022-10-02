@@ -146,12 +146,14 @@ class PrivateSpot():
             if price and type == 'MARKET':
                 self._log.error(f"You specified a price and a MARKET type order. That does not make sense."
                                 f" Please review the call parameters.")
-                return {}
+                return {'API_call_success': False,
+                        'data': None}
 
             if total and amount:
                 self._log.error(f"You specified both a total and an amount. That does not make sense."
                                 f" Please review the call parameters.")
-                return {}
+                return {'API_call_success': False,
+                        'data': None}
 
             if price and type in ['LIMIT', 'STOP_LIMIT']:
                 to_return['price'] = price
@@ -168,6 +170,43 @@ class PrivateSpot():
                         added_url=added_url,
                         data=return_data(),
                         max_retries=max_retries).send()
+
+    @check_API_key
+    def double_check_post_order(self,
+                                pair: AnyStr,
+                                side: AnyStr,
+                                type: AnyStr,
+                                amount: AnyStr,
+                                price: AnyStr):
+        # first double check the order in my_open_orders
+        my_open_orders_response = self.my_open_orders(filter_pair = pair)
+        if my_open_orders_response['API_call_success']:
+            if my_open_orders_response['data']['success']:
+                current_order_matches = list(filter(lambda _:_['side'] == side
+                                                             and _['type'] == type
+                                                             and _['amount'] == amount
+                                                             and _['price'] == price,
+                                                    my_open_orders_response['data']['orders']))
+                if len(current_order_matches):
+                    return {'API_call_success': True,
+                            'data': current_order_matches[0]}
+
+        # if nothing was found then double check in the order history, perhaps the order was executed instantly
+        my_order_history_response = self.my_orders_history(filter_pair = pair)
+        if my_order_history_response['API_call_success']:
+            if my_order_history_response['data']['success']:
+                current_order_matches = list(filter(lambda _:_['side'] == side
+                                                             and _['type'] == type
+                                                             and _['amount'] == amount
+                                                             and _['price'] == price,
+                                                    my_open_orders_response['data']['orders']))
+                if len(current_order_matches):
+                    return {'API_call_success': True,
+                            'data': current_order_matches[0]}
+
+        # otherwise the order could not be matched, return an empty dict
+        return {'API_call_success': False,
+                'data': {}}
 
     @check_API_key
     def cancel_order(self,
