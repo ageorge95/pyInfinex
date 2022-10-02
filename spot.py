@@ -199,7 +199,7 @@ class PrivateSpot():
                                                              and _['type'] == type
                                                              and _['amount'] == amount
                                                              and _['price'] == price,
-                                                    my_open_orders_response['data']['orders']))
+                                                    my_order_history_response['data']['orders']))
                 if len(current_order_matches):
                     return {'API_call_success': True,
                             'data': current_order_matches[0]}
