@@ -79,7 +79,8 @@ class PrivateSpot():
     @check_API_key
     def my_orders_history(self,
                           max_retries: int = 1,
-                          filter_pair: AnyStr = None):
+                          filter_pair: AnyStr = None,
+                          starting_offset: int = 0):
         '''
         Will return ALL the orders history for an API key or just
          the orders history for a certain trading pair.
@@ -99,7 +100,7 @@ class PrivateSpot():
             return to_return
 
         orders = []
-        offset = 0
+        offset = starting_offset
 
         while True:
             response = API_call(base_url=self.base_endpoint,
