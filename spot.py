@@ -2,6 +2,7 @@ from logging import getLogger
 from typing import AnyStr
 from network_wrappers import API_call
 from utils import check_API_key
+from decimal import Decimal
 
 class PublicSpot():
     _log: getLogger
@@ -140,6 +141,12 @@ class PrivateSpot():
 
         added_url = r'spot/open_orders/new'
 
+        # some safe checks
+        # will remove any possible trailing 0s, like 0.2312130
+        price = str(Decimal(price).normalize())
+        amount = str(Decimal(amount).normalize())
+        total = str(Decimal(total).normalize())
+
         def return_data():
             to_return = {'api_key': self.API_key,
                          'pair': pair,
@@ -184,6 +191,11 @@ class PrivateSpot():
                          price: AnyStr,
                          starting_offset: int = 0):
 
+        # some safe checks
+        # will remove any possible trailing 0s, like 0.2312130
+        price = str(Decimal(price).normalize())
+        amount = str(Decimal(amount).normalize())
+
         my_open_orders_response = self.my_open_orders(filter_pair = pair,
                                                       starting_offset = starting_offset)
         if my_open_orders_response['API_call_success']:
@@ -211,6 +223,11 @@ class PrivateSpot():
                            price: AnyStr,
                            starting_offset: int = 0):
 
+        # some safe checks
+        # will remove any possible trailing 0s, like 0.2312130
+        price = str(Decimal(price).normalize())
+        amount = str(Decimal(amount).normalize())
+
         my_order_history_response = self.my_orders_history(filter_pair = pair,
                                                            starting_offset = starting_offset)
         if my_order_history_response['API_call_success']:
@@ -237,7 +254,13 @@ class PrivateSpot():
                         amount: AnyStr,
                         price: AnyStr,
                         starting_offset: int = 0):
-        # first double check the order in my_open_orders
+
+        # some safe checks
+        # will remove any possible trailing 0s, like 0.2312130
+        price = str(Decimal(price).normalize())
+        amount = str(Decimal(amount).normalize())
+
+        # first try to match the order in my_open_orders
         my_open_orders_response = self.match_order_open(pair = pair,
                                                         side = side,
                                                         type = type,
