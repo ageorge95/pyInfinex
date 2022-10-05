@@ -172,13 +172,13 @@ class PrivateSpot():
                         max_retries=max_retries).send()
 
     @check_API_key
-    def double_check_post_order(self,
+    def match_order_open(self,
                                 pair: AnyStr,
                                 side: AnyStr,
                                 type: AnyStr,
                                 amount: AnyStr,
                                 price: AnyStr):
-        # first double check the order in my_open_orders
+
         my_open_orders_response = self.my_open_orders(filter_pair = pair)
         if my_open_orders_response['API_call_success']:
             if my_open_orders_response['data']['success']:
@@ -187,11 +187,23 @@ class PrivateSpot():
                                                              and _['amount'] == amount
                                                              and _['price'] == price,
                                                     my_open_orders_response['data']['orders']))
+                # return the matched order
                 if len(current_order_matches):
                     return {'API_call_success': True,
                             'data': current_order_matches[0]}
 
-        # if nothing was found then double check in the order history, perhaps the order was executed instantly
+        # the order could not be matched, return an empty dict
+        return {'API_call_success': False,
+                'data': {}}
+
+    @check_API_key
+    def match_order_closed(self,
+                           pair: AnyStr,
+                           side: AnyStr,
+                           type: AnyStr,
+                           amount: AnyStr,
+                           price: AnyStr):
+
         my_order_history_response = self.my_orders_history(filter_pair = pair)
         if my_order_history_response['API_call_success']:
             if my_order_history_response['data']['success']:
@@ -200,9 +212,39 @@ class PrivateSpot():
                                                              and _['amount'] == amount
                                                              and _['price'] == price,
                                                     my_order_history_response['data']['orders']))
+                # return the matched order
                 if len(current_order_matches):
                     return {'API_call_success': True,
                             'data': current_order_matches[0]}
+
+        # the order could not be matched, return an empty dict
+        return {'API_call_success': False,
+                'data': {}}
+
+    @check_API_key
+    def match_order_all(self,
+                        pair: AnyStr,
+                        side: AnyStr,
+                        type: AnyStr,
+                        amount: AnyStr,
+                        price: AnyStr):
+        # first double check the order in my_open_orders
+        my_open_orders_response = self.match_order_open(pair = pair,
+                                                          side = side,
+                                                          type = type,
+                                                          amount = amount,
+                                                          price = price)
+        if my_open_orders_response['API_call_success']:
+            return my_open_orders_response
+
+        # if nothing was found then double check in the order history, perhaps the order was executed instantly
+        my_order_history_response = self.match_order_closed(pair = pair,
+                                                          side = side,
+                                                          type = type,
+                                                          amount = amount,
+                                                          price = price)
+        if my_order_history_response['API_call_success']:
+            return my_order_history_response
 
         # otherwise the order could not be matched, return an empty dict
         return {'API_call_success': False,

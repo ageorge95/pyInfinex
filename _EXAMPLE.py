@@ -52,9 +52,23 @@ if __name__ == '__main__':
     # cancel an order based on the order ID
     # pprint(API_obj.cancel_order(obid=29033))
 
-    # get the id of an open order
-    # pprint(API_obj.double_check_post_order(pair='BPX/USDT',
-    #                                        side='SELL',
-    #                                        type='LIMIT',
-    #                                        amount='1030',
-    #                                        price='0.00049'))
+    # get the data for an open order, check in both open and closed (canceled or filled) orders
+    # pprint(API_obj.match_order_all(pair='BPX/USDT',
+    #                                side='SELL',
+    #                                type='LIMIT',
+    #                                amount='1030',
+    #                                price='0.00049'))
+
+    # get the data for an open order, check only in the open orders
+    # pprint(API_obj.match_order_open(pair='BPX/USDT',
+    #                                 side='SELL',
+    #                                 type='LIMIT',
+    #                                 amount='1030',
+    #                                 price='0.00049'))
+
+    # get the data for an open order, check only in the closed (canceled or filled) orders
+    # pprint(API_obj.match_order_closed(pair='BPX/USDT',
+    #                                   side='SELL',
+    #                                   type='LIMIT',
+    #                                   amount='1030',
+    #                                   price='0.00049'))
