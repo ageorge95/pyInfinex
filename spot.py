@@ -71,6 +71,7 @@ class PrivateSpot():
 
                     else:
                         response['data']['orders'] = orders
+                        response['final_offset'] = offset
                         return response
                 else:
                     return response
@@ -119,6 +120,7 @@ class PrivateSpot():
 
                     else:
                         response['data']['orders'] = orders
+                        response['final_offset'] = offset
                         return response
                 else:
                     return response
