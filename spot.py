@@ -175,13 +175,15 @@ class PrivateSpot():
 
     @check_API_key
     def match_order_open(self,
-                                pair: AnyStr,
-                                side: AnyStr,
-                                type: AnyStr,
-                                amount: AnyStr,
-                                price: AnyStr):
+                         pair: AnyStr,
+                         side: AnyStr,
+                         type: AnyStr,
+                         amount: AnyStr,
+                         price: AnyStr,
+                         starting_offset: int = 0):
 
-        my_open_orders_response = self.my_open_orders(filter_pair = pair)
+        my_open_orders_response = self.my_open_orders(filter_pair = pair,
+                                                      starting_offset = starting_offset)
         if my_open_orders_response['API_call_success']:
             if my_open_orders_response['data']['success']:
                 current_order_matches = list(filter(lambda _:_['side'] == side
@@ -204,9 +206,11 @@ class PrivateSpot():
                            side: AnyStr,
                            type: AnyStr,
                            amount: AnyStr,
-                           price: AnyStr):
+                           price: AnyStr,
+                           starting_offset: int = 0):
 
-        my_order_history_response = self.my_orders_history(filter_pair = pair)
+        my_order_history_response = self.my_orders_history(filter_pair = pair,
+                                                           starting_offset = starting_offset)
         if my_order_history_response['API_call_success']:
             if my_order_history_response['data']['success']:
                 current_order_matches = list(filter(lambda _:_['side'] == side
@@ -229,22 +233,25 @@ class PrivateSpot():
                         side: AnyStr,
                         type: AnyStr,
                         amount: AnyStr,
-                        price: AnyStr):
+                        price: AnyStr,
+                        starting_offset: int = 0):
         # first double check the order in my_open_orders
         my_open_orders_response = self.match_order_open(pair = pair,
-                                                          side = side,
-                                                          type = type,
-                                                          amount = amount,
-                                                          price = price)
+                                                        side = side,
+                                                        type = type,
+                                                        amount = amount,
+                                                        price = price,
+                                                        starting_offset = starting_offset)
         if my_open_orders_response['API_call_success']:
             return my_open_orders_response
 
         # if nothing was found then double check in the order history, perhaps the order was executed instantly
         my_order_history_response = self.match_order_closed(pair = pair,
-                                                          side = side,
-                                                          type = type,
-                                                          amount = amount,
-                                                          price = price)
+                                                            side = side,
+                                                            type = type,
+                                                            amount = amount,
+                                                            price = price,
+                                                            starting_offset = starting_offset)
         if my_order_history_response['API_call_success']:
             return my_order_history_response
 
