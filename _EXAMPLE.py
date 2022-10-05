@@ -71,4 +71,5 @@ if __name__ == '__main__':
     #                                   side='SELL',
     #                                   type='LIMIT',
     #                                   amount='1030',
-    #                                   price='0.00049'))
+    #                                   price='0.00049',
+    #                                   starting_offset = 200))
