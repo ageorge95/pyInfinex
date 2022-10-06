@@ -144,11 +144,11 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(price).normalize())
+            price = str(Decimal(str(price)).normalize())
         if amount:
-            amount = str(Decimal(amount).normalize())
+            amount = str(Decimal(str(amount)).normalize())
         if total:
-            total = str(Decimal(total).normalize())
+            total = str(Decimal(str(total)).normalize())
 
         def return_data():
             to_return = {'api_key': self.API_key,
@@ -197,9 +197,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(price).normalize())
+            price = str(Decimal(str(price)).normalize())
         if amount:
-            amount = str(Decimal(amount).normalize())
+            amount = str(Decimal(str(amount)).normalize())
 
         my_open_orders_response = self.my_open_orders(filter_pair = pair,
                                                       starting_offset = starting_offset)
@@ -231,9 +231,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(price).normalize())
+            price = str(Decimal(str(price)).normalize())
         if amount:
-            amount = str(Decimal(amount).normalize())
+            amount = str(Decimal(str(amount)).normalize())
 
         my_order_history_response = self.my_orders_history(filter_pair = pair,
                                                            starting_offset = starting_offset)
@@ -265,9 +265,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(price).normalize())
+            price = str(Decimal(str(price)).normalize())
         if amount:
-            amount = str(Decimal(amount).normalize())
+            amount = str(Decimal(str(amount)).normalize())
 
         # first try to match the order in my_open_orders
         my_open_orders_response = self.match_order_open(pair = pair,
