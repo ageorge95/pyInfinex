@@ -215,7 +215,8 @@ class PrivateSpot():
                 # return the matched order
                 if len(current_order_matches):
                     return {'API_call_success': True,
-                            'data': current_order_matches[0]}
+                            'data': current_order_matches[0],
+                            'final_offset': my_open_orders_response['final_offset']}
 
         # the order could not be matched, return an empty dict
         return {'API_call_success': False,
@@ -251,7 +252,8 @@ class PrivateSpot():
                 # return the matched order
                 if len(current_order_matches):
                     return {'API_call_success': True,
-                            'data': current_order_matches}
+                            'data': current_order_matches[0],
+                            'final_offset': my_order_history_response['final_offset']}
 
         # the order could not be matched, return an empty dict
         return {'API_call_success': False,
