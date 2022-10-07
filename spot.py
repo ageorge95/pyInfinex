@@ -192,6 +192,7 @@ class PrivateSpot():
                          type: AnyStr,
                          amount: AnyStr,
                          price: AnyStr,
+                         obid: AnyStr = None,
                          starting_offset: int = 0):
 
         # some safe checks
@@ -208,7 +209,8 @@ class PrivateSpot():
                 current_order_matches = list(filter(lambda _:_['side'] == side
                                                              and _['type'] == type
                                                              and _['amount'] == amount
-                                                             and _['price'] == price,
+                                                             and _['price'] == price
+                                                             and (_['obid'] == obid )if obid else True,
                                                     my_open_orders_response['data']['orders']))
                 # return the matched order
                 if len(current_order_matches):
@@ -226,6 +228,7 @@ class PrivateSpot():
                            type: AnyStr,
                            amount: AnyStr,
                            price: AnyStr,
+                           obid: AnyStr = None,
                            starting_offset: int = 0):
 
         # some safe checks
@@ -242,12 +245,13 @@ class PrivateSpot():
                 current_order_matches = list(filter(lambda _:_['side'] == side
                                                              and _['type'] == type
                                                              and _['amount'] == amount
-                                                             and _['price'] == price,
+                                                             and _['price'] == price
+                                                             and (_['obid'] == obid )if obid else True,
                                                     my_order_history_response['data']['orders']))
                 # return the matched order
                 if len(current_order_matches):
                     return {'API_call_success': True,
-                            'data': current_order_matches[0]}
+                            'data': current_order_matches}
 
         # the order could not be matched, return an empty dict
         return {'API_call_success': False,
@@ -260,6 +264,7 @@ class PrivateSpot():
                         type: AnyStr,
                         amount: AnyStr,
                         price: AnyStr,
+                        obid: AnyStr = None,
                         starting_offset: int = 0):
 
         # some safe checks
@@ -275,6 +280,7 @@ class PrivateSpot():
                                                         type = type,
                                                         amount = amount,
                                                         price = price,
+                                                        obid=obid,
                                                         starting_offset = starting_offset)
         if my_open_orders_response['API_call_success']:
             return my_open_orders_response
@@ -285,6 +291,7 @@ class PrivateSpot():
                                                             type = type,
                                                             amount = amount,
                                                             price = price,
+                                                            obid=obid,
                                                             starting_offset = starting_offset)
         if my_order_history_response['API_call_success']:
             return my_order_history_response
