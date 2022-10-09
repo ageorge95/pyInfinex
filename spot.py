@@ -144,7 +144,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(str(price)).normalize())
+            price = Decimal(str(price)).normalize()
+            decimals = abs(price.as_tuple().exponent)
+            price = f'{price:.{decimals}f}'
         if amount:
             amount = str(Decimal(str(amount)).normalize())
         if total:
@@ -198,7 +200,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(str(price)).normalize())
+            price = Decimal(str(price)).normalize()
+            decimals = abs(price.as_tuple().exponent)
+            price = f'{price:.{decimals}f}'
         if amount:
             amount = str(Decimal(str(amount)).normalize())
 
@@ -235,7 +239,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(str(price)).normalize())
+            price = Decimal(str(price)).normalize()
+            decimals = abs(price.as_tuple().exponent)
+            price = f'{price:.{decimals}f}'
         if amount:
             amount = str(Decimal(str(amount)).normalize())
 
@@ -272,7 +278,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = str(Decimal(str(price)).normalize())
+            price = Decimal(str(price)).normalize()
+            decimals = abs(price.as_tuple().exponent)
+            price = f'{price:.{decimals}f}'
         if amount:
             amount = str(Decimal(str(amount)).normalize())
 
