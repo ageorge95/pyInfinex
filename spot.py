@@ -1,7 +1,8 @@
 from logging import getLogger
 from typing import AnyStr
 from network_wrappers import API_call
-from utils import check_API_key
+from utils import check_API_key,\
+    normalize_Decimal
 from decimal import Decimal
 
 class PublicSpot():
@@ -144,15 +145,11 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = Decimal(str(price)).normalize()
-            decimals = abs(price.as_tuple().exponent)
-            price = f'{price:.{decimals}f}'
+            price = normalize_Decimal(price)
         if amount:
-            amount = Decimal(str(amount)).normalize()
-            decimals = abs(amount.as_tuple().exponent)
-            amount = f'{amount:.{decimals}f}'
+            amount = normalize_Decimal(amount)
         if total:
-            total = str(Decimal(str(total)).normalize())
+            total = normalize_Decimal(total)
 
         def return_data():
             to_return = {'api_key': self.API_key,
@@ -196,19 +193,15 @@ class PrivateSpot():
                          type: AnyStr,
                          amount: AnyStr,
                          price: AnyStr,
-                         obid: AnyStr = None,
+                         obid: int = None,
                          starting_offset: int = 0):
 
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = Decimal(str(price)).normalize()
-            decimals = abs(price.as_tuple().exponent)
-            price = f'{price:.{decimals}f}'
+            price = normalize_Decimal(price)
         if amount:
-            amount = Decimal(str(amount)).normalize()
-            decimals = abs(amount.as_tuple().exponent)
-            amount = f'{amount:.{decimals}f}'
+            amount = normalize_Decimal(amount)
 
         my_open_orders_response = self.my_open_orders(filter_pair = pair,
                                                       starting_offset = starting_offset)
@@ -218,7 +211,7 @@ class PrivateSpot():
                                                              and _['type'] == type
                                                              and _['amount'] == amount
                                                              and _['price'] == price
-                                                             and (_['obid'] == obid )if obid else True,
+                                                             and (_['obid'] == obid ) if obid else True,
                                                     my_open_orders_response['data']['orders']))
                 # return the matched order
                 if len(current_order_matches):
@@ -243,13 +236,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = Decimal(str(price)).normalize()
-            decimals = abs(price.as_tuple().exponent)
-            price = f'{price:.{decimals}f}'
+            price = normalize_Decimal(price)
         if amount:
-            amount = Decimal(str(amount)).normalize()
-            decimals = abs(amount.as_tuple().exponent)
-            amount = f'{amount:.{decimals}f}'
+            amount = normalize_Decimal(amount)
 
         my_order_history_response = self.my_orders_history(filter_pair = pair,
                                                            starting_offset = starting_offset)
@@ -284,13 +273,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = Decimal(str(price)).normalize()
-            decimals = abs(price.as_tuple().exponent)
-            price = f'{price:.{decimals}f}'
+            price = normalize_Decimal(price)
         if amount:
-            amount = Decimal(str(amount)).normalize()
-            decimals = abs(amount.as_tuple().exponent)
-            amount = f'{amount:.{decimals}f}'
+            amount = normalize_Decimal(amount)
 
         # first try to match the order in my_open_orders
         my_open_orders_response = self.match_order_open(pair = pair,
