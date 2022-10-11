@@ -148,7 +148,9 @@ class PrivateSpot():
             decimals = abs(price.as_tuple().exponent)
             price = f'{price:.{decimals}f}'
         if amount:
-            amount = str(Decimal(str(amount)).normalize())
+            amount = Decimal(str(amount)).normalize()
+            decimals = abs(amount.as_tuple().exponent)
+            amount = f'{amount:.{decimals}f}'
         if total:
             total = str(Decimal(str(total)).normalize())
 
@@ -204,7 +206,9 @@ class PrivateSpot():
             decimals = abs(price.as_tuple().exponent)
             price = f'{price:.{decimals}f}'
         if amount:
-            amount = str(Decimal(str(amount)).normalize())
+            amount = Decimal(str(amount)).normalize()
+            decimals = abs(amount.as_tuple().exponent)
+            amount = f'{amount:.{decimals}f}'
 
         my_open_orders_response = self.my_open_orders(filter_pair = pair,
                                                       starting_offset = starting_offset)
@@ -243,7 +247,9 @@ class PrivateSpot():
             decimals = abs(price.as_tuple().exponent)
             price = f'{price:.{decimals}f}'
         if amount:
-            amount = str(Decimal(str(amount)).normalize())
+            amount = Decimal(str(amount)).normalize()
+            decimals = abs(amount.as_tuple().exponent)
+            amount = f'{amount:.{decimals}f}'
 
         my_order_history_response = self.my_orders_history(filter_pair = pair,
                                                            starting_offset = starting_offset)
@@ -282,7 +288,9 @@ class PrivateSpot():
             decimals = abs(price.as_tuple().exponent)
             price = f'{price:.{decimals}f}'
         if amount:
-            amount = str(Decimal(str(amount)).normalize())
+            amount = Decimal(str(amount)).normalize()
+            decimals = abs(amount.as_tuple().exponent)
+            amount = f'{amount:.{decimals}f}'
 
         # first try to match the order in my_open_orders
         my_open_orders_response = self.match_order_open(pair = pair,
