@@ -248,7 +248,7 @@ class PrivateSpot():
                                                              and _['type'] == type
                                                              and _['amount'] == amount
                                                              and _['price'] == price
-                                                             and (_['obid'] == obid )if obid else True,
+                                                             and ((_['obid'] == obid )if obid else True),
                                                     my_order_history_response['data']['orders']))
                 # return the matched order
                 if len(current_order_matches):
