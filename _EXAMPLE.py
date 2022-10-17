@@ -26,6 +26,13 @@ if __name__ == '__main__':
     # get a certain asset balance
     # pprint(API_obj.wallet_balances(search='BPX'))
 
+    # get all the DEPOSIT transactions
+    # pprint(API_obj.wallet_transactions(type='DEPOSIT'))
+
+    # get all the DEPOSIT transactions for a certain asset
+    # pprint(API_obj.wallet_transactions(type='DEPOSIT',
+    #                                    asset='BPX'))
+
     # ########### private spot examples ###########
     # initialize the APi wrapper
     # API_obj = pyVayamos(getenv('VAYAMOS_API_KEY'))

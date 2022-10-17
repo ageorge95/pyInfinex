@@ -56,6 +56,51 @@ class PrivateWallet():
         super(PrivateWallet, self).__init__()
 
     @check_API_key
+    def wallet_transactions(self,
+                            asset: AnyStr = None,
+                            type: AnyStr = None,
+                            status: AnyStr = None,
+                            max_retries: int = 1):
+        added_url = r'wallet/transactions'
+        max_response_len = 50
+
+        transactions = []
+        offset = 0
+
+        def return_data(offset):
+            to_return = {'offset': offset,
+                         'api_key': self.API_key}
+            if asset:
+                to_return['asset'] = asset
+            if type:
+                to_return['type'] = type
+            if status:
+                to_return['status'] = status
+            return to_return
+
+        while True:
+            response = API_call(base_url=self.base_endpoint,
+                                added_url=added_url,
+                                data=return_data(offset),
+                                max_retries=max_retries).send()
+            if response['API_call_success']:
+                if response['data']['success']:
+                    current_transactions = response['data']['transactions']
+                    transactions += current_transactions
+                    if len(current_transactions) >= max_response_len:
+
+                        offset += max_response_len
+                        self._log.info(f'Increased the offset to {offset}')
+
+                    else:
+                        response['data']['transactions'] = transactions
+                        return response
+                else:
+                    return response
+            else:
+                return response
+
+    @check_API_key
     def wallet_balances(self,
                         search: AnyStr = None,
                         max_retries: int = 1):
