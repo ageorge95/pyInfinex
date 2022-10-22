@@ -31,7 +31,9 @@ if __name__ == '__main__':
 
     # get all the DEPOSIT transactions for a certain asset
     # pprint(API_obj.wallet_transactions(type='DEPOSIT',
-    #                                    asset='BPX'))
+    #                                    asset='XSHIB'))
+    # pprint(API_obj.wallet_transactions(type='WITHDRAWAL',
+    #                                    asset='XSHIB'))
 
     # ########### private spot examples ###########
     # initialize the APi wrapper
@@ -74,9 +76,10 @@ if __name__ == '__main__':
     #                                 price='0.00049'))
 
     # get the data for an open order, check only in the closed (canceled or filled) orders
-    # pprint(API_obj.match_order_closed(pair='BPX/USDT',
-    #                                   side='SELL',
+    # pprint(API_obj.match_order_closed(pair='TAD/USDT',
+    #                                   side='BUY',
     #                                   type='LIMIT',
-    #                                   amount='1030',
-    #                                   price='0.00049',
-    #                                   starting_offset = 200))
+    #                                   amount='587.55',
+    #                                   price='0.000851',
+    #                                   starting_offset=0,
+    #                                   max_offset = 50))

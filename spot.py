@@ -84,7 +84,8 @@ class PrivateSpot():
     def my_orders_history(self,
                           max_retries: int = 1,
                           filter_pair: AnyStr = None,
-                          starting_offset: int = 0):
+                          starting_offset: int = 0,
+                          max_offset: int = 999999):
         '''
         Will return ALL the orders history for an API key or just
          the orders history for a certain trading pair.
@@ -117,7 +118,14 @@ class PrivateSpot():
                     orders += current_orders
                     if len(current_orders) >= max_response_len:
 
+                        # allow a maximum offset to be given to this method
+                        # return what data we have if the max offset has been reached
                         offset += max_response_len
+                        if offset >= max_offset:
+                            response['data']['orders'] = orders
+                            response['final_offset'] = offset
+                            return response
+
                         self._log.info(f'Increased the offset to {offset}')
 
                     else:
@@ -231,7 +239,8 @@ class PrivateSpot():
                            amount: AnyStr,
                            price: AnyStr,
                            obid: AnyStr = None,
-                           starting_offset: int = 0):
+                           starting_offset: int = 0,
+                           max_offset: int = 999999):
 
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
@@ -241,7 +250,8 @@ class PrivateSpot():
             amount = normalize_Decimal(amount)
 
         my_order_history_response = self.my_orders_history(filter_pair = pair,
-                                                           starting_offset = starting_offset)
+                                                           starting_offset = starting_offset,
+                                                           max_offset = max_offset)
         if my_order_history_response['API_call_success']:
             if my_order_history_response['data']['success']:
                 current_order_matches = list(filter(lambda _:_['side'] == side
