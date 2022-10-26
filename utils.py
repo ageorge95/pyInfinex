@@ -13,4 +13,8 @@ def normalize_Decimal(nr) -> AnyStr:
     exponent = abs(nr.as_tuple().exponent)
     if exponent:
         nr = nr.normalize()
+
+    # the exponent may change after normalize
+    exponent = abs(nr.as_tuple().exponent)
+
     return f'{nr:.{exponent}f}'
