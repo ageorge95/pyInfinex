@@ -2,8 +2,7 @@ from logging import getLogger
 from typing import AnyStr
 from network_wrappers import API_call
 from utils import check_API_key,\
-    normalize_Decimal
-from decimal import Decimal
+    full_nr_normalisation
 
 class PublicSpot():
     _log: getLogger
@@ -162,11 +161,11 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = normalize_Decimal(price)
+            price = full_nr_normalisation(price)
         if amount:
-            amount = normalize_Decimal(amount)
+            amount = full_nr_normalisation(amount)
         if total:
-            total = normalize_Decimal(total)
+            total = full_nr_normalisation(total)
 
         def return_data():
             to_return = {'api_key': self.API_key,
@@ -217,9 +216,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = normalize_Decimal(price)
+            price = full_nr_normalisation(price)
         if amount:
-            amount = normalize_Decimal(amount)
+            amount = full_nr_normalisation(amount)
 
         my_open_orders_response = self.my_open_orders(filter_pair = pair,
                                                       starting_offset = starting_offset,
@@ -256,9 +255,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = normalize_Decimal(price)
+            price = full_nr_normalisation(price)
         if amount:
-            amount = normalize_Decimal(amount)
+            amount = full_nr_normalisation(amount)
 
         my_order_history_response = self.my_orders_history(filter_pair = pair,
                                                            starting_offset = starting_offset,
@@ -296,9 +295,9 @@ class PrivateSpot():
         # some safe checks
         # will remove any possible trailing 0s, like 0.2312130
         if price:
-            price = normalize_Decimal(price)
+            price = full_nr_normalisation(price)
         if amount:
-            amount = normalize_Decimal(amount)
+            amount = full_nr_normalisation(amount)
 
         # first try to match the order in my_open_orders
         my_open_orders_response = self.match_order_open(pair = pair,

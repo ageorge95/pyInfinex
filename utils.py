@@ -8,13 +8,23 @@ def check_API_key(func):
         return func(*args, **kwargs)
     return inner
 
-def normalize_Decimal(nr) -> AnyStr:
-    nr = Decimal(nr)
-    exponent = abs(nr.as_tuple().exponent)
-    if exponent:
-        nr = nr.normalize()
+def full_nr_normalisation(nr: [Decimal, str, int, float]) -> AnyStr:
 
-    # the exponent may change after normalize
-    exponent = abs(nr.as_tuple().exponent)
+    # first remove any trailing of 0 from the nr
+    # nr must first be converted to a Decimal, to correctly display it
+    if type(nr) != type(Decimal):
+        nr = Decimal(str(nr))
 
-    return f'{nr:.{exponent}f}'
+    nr_decimal_places = abs(nr.as_tuple().exponent)
+    nr = f'{nr:.{nr_decimal_places}f}'
+
+    # now remove all trailing 0s
+    while nr.endswith('0'):
+        nr = nr[:-1]
+
+    # then convert the number to a decimal
+    nr = Decimal(str(nr))
+
+    # and finally return it
+    nr_decimal_places = abs(nr.as_tuple().exponent)
+    return f'{nr:.{nr_decimal_places}f}'
