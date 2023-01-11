@@ -7,7 +7,7 @@ if __name__ == '__main__':
     configure_logger()
     # ########### public wallet examples ###########
     # initialize the APi wrapper
-    # API_obj = pyVayamos()
+    # API_obj = pyInfinex()
 
     # get a list of all assets
     # pprint(API_obj.assets_list())
@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     # ########### private wallet examples ###########
     # initialize the APi wrapper
-    # API_obj = pyVayamos(getenv('VAYAMOS_API_KEY'))
+    # API_obj = pyInfinex(getenv('INFINEX_API_KEY'))
 
     # get all the balances
     # pprint(API_obj.wallet_balances())
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     # ########### private spot examples ###########
     # initialize the APi wrapper
-    # API_obj = pyVayamos(getenv('VAYAMOS_API_KEY'))
+    # API_obj = pyInfinex(getenv('INFINEX_API_KEY'))
 
     # return all open orders
     # pprint(API_obj.my_open_orders())

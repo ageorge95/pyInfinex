@@ -5,7 +5,7 @@ from wallet import PublicWallet,\
 from spot import PublicSpot,\
     PrivateSpot
 
-base_endpoint: AnyStr = 'https://api.vayamos.cc'
+base_endpoint: AnyStr = 'https://api.infinex.cc'
 
 class pyInfinex(PublicWallet,
                 PrivateWallet,
