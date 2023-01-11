@@ -1,7 +1,7 @@
 from logger import configure_logger
 from os import getenv
 from pprint import pprint
-from pyVayamos import pyVayamos
+from pyInfinex import pyInfinex
 
 if __name__ == '__main__':
     configure_logger()

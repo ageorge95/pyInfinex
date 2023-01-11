@@ -7,7 +7,7 @@ from spot import PublicSpot,\
 
 base_endpoint: AnyStr = 'https://api.vayamos.cc'
 
-class pyVayamos(PublicWallet,
+class pyInfinex(PublicWallet,
                 PrivateWallet,
                 PublicSpot,
                 PrivateSpot):
@@ -20,5 +20,5 @@ class pyVayamos(PublicWallet,
 
         self.base_endpoint = base_endpoint
 
-        super(pyVayamos, self).__init__()
+        super(pyInfinex, self).__init__()
 
