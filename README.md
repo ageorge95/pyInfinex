@@ -1,2 +1,2 @@
-# pyVayamos
-Python wrapper for the Vayamos crypto exchange API
+# pyInfinex
+Python wrapper for the Infinex crypto exchange API
