@@ -252,13 +252,15 @@ class PrivateSpot():
                                                     my_open_orders_response['data']['orders']))
                 # return the matched order
                 if len(current_order_matches):
+                    data = {'success': True}
+                    data.update(current_order_matches[0])
                     return {'API_call_success': True,
-                            'data': current_order_matches[0],
+                            'data': data,
                             'final_offset': my_open_orders_response['final_offset']}
 
         # the order could not be matched, return an empty dict
         return {'API_call_success': False,
-                'data': {}}
+                'data': {'success': False}}
 
     @check_API_key
     def match_order_closed(self,
@@ -291,13 +293,15 @@ class PrivateSpot():
                                                     my_order_history_response['data']['orders']))
                 # return the matched order
                 if len(current_order_matches):
+                    data = {'success': True}
+                    data.update(current_order_matches[0])
                     return {'API_call_success': True,
-                            'data': current_order_matches[0],
+                            'data': data,
                             'final_offset': my_order_history_response['final_offset']}
 
         # the order could not be matched, return an empty dict
         return {'API_call_success': False,
-                'data': {}}
+                'data': {'success': False}}
 
     @check_API_key
     def match_order_all(self,
@@ -344,7 +348,7 @@ class PrivateSpot():
 
         # otherwise the order could not be matched, return an empty dict
         return {'API_call_success': False,
-                'data': {}}
+                'data': {'success': False}}
 
     @check_API_key
     def cancel_order(self,
