@@ -154,7 +154,8 @@ class PrivateSpot():
                        amount: AnyStr = None,
                        total: AnyStr = None,
                        time_in_force: AnyStr = 'GTC',
-                       max_retries: int = 1):
+                       max_retries: int = 1,
+                       return_matched_order: bool = True):
 
         added_url = r'spot/open_orders/new'
 
@@ -197,10 +198,20 @@ class PrivateSpot():
 
             return to_return
 
-        return API_call(base_url=self.base_endpoint,
-                        added_url=added_url,
-                        data=return_data(),
-                        max_retries=max_retries).send()
+        processed_input = return_data()
+        post_order_response = API_call(base_url=self.base_endpoint,
+                                       added_url=added_url,
+                                       data=processed_input,
+                                       max_retries=max_retries).send()
+
+        if return_matched_order and post_order_response['API_call_success'] and post_order_response['data']['success']:
+            # prepare the arguments for match_order_all
+            processed_input.pop('api_key')
+            processed_input.pop('time_in_force')
+            return self.match_order_all(**processed_input)
+
+        else:
+            return post_order_response
 
     @check_API_key
     def match_order_open(self,
@@ -307,7 +318,7 @@ class PrivateSpot():
                                                         price = price,
                                                         obid=obid,
                                                         starting_offset = starting_offset,
-                                                        max_offset = 999999)
+                                                        max_offset = max_offset)
         if my_open_orders_response['API_call_success']:
             return my_open_orders_response
 
@@ -319,7 +330,7 @@ class PrivateSpot():
                                                             price = price,
                                                             obid=obid,
                                                             starting_offset = starting_offset,
-                                                            max_offset = 999999)
+                                                            max_offset = max_offset)
         if my_order_history_response['API_call_success']:
             return my_order_history_response
 
