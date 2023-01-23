@@ -214,7 +214,9 @@ class PrivateSpot():
                 matched_order_response = self.match_order_all(**processed_input)
                 if matched_order_response['API_call_success']:
                     return matched_order_response
-                sleep(5)
+                else:
+                    self._log.warning(f'Could not match your newly created order :( {processed_input}')
+                    sleep(5)
 
         else:
             return post_order_response
