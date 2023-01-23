@@ -8,7 +8,8 @@ def check_API_key(func):
         return func(*args, **kwargs)
     return inner
 
-def full_nr_normalisation(nr: [Decimal, str, int, float]) -> AnyStr:
+def full_nr_normalisation(nr: [Decimal, str, int, float],
+                          decimals_overwrite: int = None) -> AnyStr:
 
     # first remove any trailing of 0 from the nr
     # nr must first be converted to a Decimal, to correctly display it
@@ -27,4 +28,4 @@ def full_nr_normalisation(nr: [Decimal, str, int, float]) -> AnyStr:
 
     # and finally return it
     nr_decimal_places = abs(nr.as_tuple().exponent)
-    return f'{nr:.{nr_decimal_places}f}'
+    return f'{nr:.{nr_decimal_places if not decimals_overwrite else decimals_overwrite}f}'
