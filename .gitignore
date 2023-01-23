@@ -1,2 +1,4 @@
 /.idea
 *.pyc
+/.__runtime_log.lock
+/runtime_log.log
