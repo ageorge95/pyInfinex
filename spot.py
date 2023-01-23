@@ -3,6 +3,7 @@ from typing import AnyStr
 from network_wrappers import API_call
 from utils import check_API_key,\
     full_nr_normalisation
+from time import sleep
 
 class PublicSpot():
     _log: getLogger
@@ -208,7 +209,12 @@ class PrivateSpot():
             # prepare the arguments for match_order_all
             processed_input.pop('api_key')
             processed_input.pop('time_in_force')
-            return self.match_order_all(**processed_input)
+            # order matching is by default a blocking call
+            while True:
+                matched_order_response = self.match_order_all(**processed_input)
+                if matched_order_response['API_call_success']:
+                    return matched_order_response
+                sleep(5)
 
         else:
             return post_order_response
