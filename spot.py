@@ -238,6 +238,8 @@ class PrivateSpot():
             price = full_nr_normalisation(price)
         if amount:
             amount = full_nr_normalisation(amount)
+        if obid:
+            obid = int(obid)
 
         my_open_orders_response = self.my_open_orders(filter_pair = pair,
                                                       starting_offset = starting_offset,
@@ -279,6 +281,8 @@ class PrivateSpot():
             price = full_nr_normalisation(price)
         if amount:
             amount = full_nr_normalisation(amount)
+        if obid:
+            obid = int(obid)
 
         my_order_history_response = self.my_orders_history(filter_pair = pair,
                                                            starting_offset = starting_offset,
