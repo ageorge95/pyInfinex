@@ -17,7 +17,7 @@ def full_nr_normalisation(nr: [Decimal, str, int, float],
         nr = Decimal(str(nr))
 
     nr_decimal_places = abs(nr.as_tuple().exponent)
-    nr = f'{nr:.{nr_decimal_places}f}'
+    nr = f'{nr:.{nr_decimal_places if not decimals_overwrite else decimals_overwrite}f}'
 
     # now remove all trailing 0s
     while nr.endswith('0') and len(nr) > 1 and ',' in nr:
@@ -28,4 +28,4 @@ def full_nr_normalisation(nr: [Decimal, str, int, float],
 
     # and finally return it
     nr_decimal_places = abs(nr.as_tuple().exponent)
-    return f'{nr:.{nr_decimal_places if not decimals_overwrite else decimals_overwrite}f}'
+    return f'{nr:.{nr_decimal_places}f}'
