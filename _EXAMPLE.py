@@ -16,6 +16,9 @@ if __name__ == '__main__':
     # aggregated order book for BPX/USDT
     # pprint(API_obj.aggregated_order_book(pair='BPX/USDT'))
 
+    # market info for BPX/USDT
+    # pprint(API_obj.market_info(pair='BPX/USDT'))
+
     # ########### private wallet examples ###########
     # initialize the APi wrapper
     # API_obj = pyInfinex(getenv('INFINEX_API_KEY'))

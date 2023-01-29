@@ -23,6 +23,16 @@ class PublicSpot():
                         data={'pair': pair},
                         max_retries=max_retries).send()
 
+    def market_info(self,
+                    pair,
+                    max_retries: int = 1,):
+        added_url = r'/spot/markets_ex'
+
+        return API_call(base_url=self.base_endpoint,
+                        added_url=added_url,
+                        data={'pair': pair},
+                        max_retries=max_retries).send()
+
 class PrivateSpot():
     _log: getLogger
     base_endpoint: AnyStr
