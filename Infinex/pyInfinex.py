@@ -1,8 +1,8 @@
 from logging import getLogger
 from typing import AnyStr
-from wallet import PublicWallet,\
+from Infinex.wallet import PublicWallet,\
     PrivateWallet
-from spot import PublicSpot,\
+from Infinex.spot import PublicSpot,\
     PrivateSpot
 
 base_endpoint: AnyStr = 'https://api.infinex.cc'

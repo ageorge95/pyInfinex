@@ -1,9 +1,9 @@
 from logging import getLogger
 from typing import AnyStr
-from network_wrappers import API_call
-from utils import check_API_key,\
-    full_nr_normalisation
 from time import sleep
+from Infinex.network_wrappers import API_call
+from Infinex.utils import check_API_key,\
+    full_nr_normalisation
 
 class PublicSpot():
     _log: getLogger

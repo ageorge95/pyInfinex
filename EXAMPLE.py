@@ -1,7 +1,4 @@
-from logger import configure_logger
-from os import getenv
-from pprint import pprint
-from pyInfinex import pyInfinex
+from Infinex.logger import configure_logger
 
 if __name__ == '__main__':
     configure_logger()
