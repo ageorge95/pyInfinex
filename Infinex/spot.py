@@ -216,15 +216,12 @@ class PrivateSpot():
                                        max_retries=max_retries).send()
 
         if return_matched_order and post_order_response['API_call_success'] and post_order_response['data']['success']:
-            # some sleep time to allow the new order to be fully registered on the exchange
-            sleep(2)
-            # prepare the arguments for match_order_all
             processed_input.pop('api_key')
             processed_input.pop('time_in_force')
             # order matching is by default a blocking call
             while True:
-                matched_order_response = self.match_order_all(**processed_input)
-                if matched_order_response['API_call_success']:
+                matched_order_response = self.match_order_open(**processed_input)
+                if matched_order_response['API_call_success'] and matched_order_response['data']['success']:
                     return matched_order_response
                 else:
                     self._log.warning(f'Could not match your newly created order :( {processed_input}')
