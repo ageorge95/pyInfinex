@@ -23,7 +23,8 @@ class API_call():
                 self._log.info(f'Sending an API call to {self.final_URL} at retry attempt {current_retry + 1}/{self.max_retries}')
                 return {'API_call_success': True,
                         'data': get(self.final_URL,
-                                    json=self.data).json()}
+                                    json=self.data,
+                                    timeout=(5,5)).json()}
             except:
                 self._log.error(f'Failed to send an API call to {self.final_URL} at retry attempt {current_retry + 1}/{self.max_retries}')
                 current_retry += 1
