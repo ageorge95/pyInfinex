@@ -269,9 +269,13 @@ class PrivateSpot():
                             'data': data,
                             'final_offset': my_open_orders_response['final_offset']}
 
-        # the order could not be matched, return an empty dict
-        return {'API_call_success': False,
-                'data': {'success': False}}
+            # the order could not be matched because it does not exist
+            return {'API_call_success': True,
+                    'data': {'success': False}}
+        else:
+            # the order could not be matched because of network errors
+            return {'API_call_success': False,
+                    'data': {'success': False}}
 
     @check_API_key
     def match_order_closed(self,
@@ -312,9 +316,13 @@ class PrivateSpot():
                             'data': data,
                             'final_offset': my_order_history_response['final_offset']}
 
-        # the order could not be matched, return an empty dict
-        return {'API_call_success': False,
-                'data': {'success': False}}
+            # the order could not be matched because it does not exist
+            return {'API_call_success': True,
+                    'data': {'success': False}}
+        else:
+            # the order could not be matched because of network errors
+            return {'API_call_success': False,
+                    'data': {'success': False}}
 
     @check_API_key
     def match_order_all(self,
