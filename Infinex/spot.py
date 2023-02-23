@@ -352,7 +352,7 @@ class PrivateSpot():
                                                         obid=obid,
                                                         starting_offset = starting_offset,
                                                         max_offset = max_offset)
-        if my_open_orders_response['API_call_success']:
+        if my_open_orders_response['API_call_success'] and my_open_orders_response['data']['success']:
             return my_open_orders_response
 
         # if nothing was found then double check in the order history, perhaps the order was executed instantly
@@ -364,7 +364,7 @@ class PrivateSpot():
                                                             obid=obid,
                                                             starting_offset = starting_offset,
                                                             max_offset = max_offset)
-        if my_order_history_response['API_call_success']:
+        if my_order_history_response['API_call_success'] and my_order_history_response['data']['success']:
             return my_order_history_response
 
         # otherwise the order could not be matched, return an empty dict
