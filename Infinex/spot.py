@@ -333,7 +333,7 @@ class PrivateSpot():
                         price: AnyStr,
                         obid: AnyStr = None,
                         starting_offset: int = 0,
-                        max_offset: int = 100
+                        max_offset: int = 200
                         ):
 
         # some safe checks
