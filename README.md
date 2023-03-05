@@ -12,7 +12,34 @@ Python wrapper for the Infinex crypto exchange API
 
 - Official API documentation: https://github.com/infinex-exchange/api-docs
 
-# How to get help
+# Setup
+## Ubuntu (tested with 22.04.2)
+### Prerequisites
+```
+sudo apt install git
+sudo apt install python3-venv
+```
+
+### Installation
+```
+git clone https://github.com/ageorge95/pyInfinex pyInfinex
+cd pyInfinex
+sh install.sh
+```
+
+## Windows (tested with win10Pro, win11Pro)
+### Prerequisites
+- git for windows: https://gitforwindows.org/
+- python 3.x (>=3.9, 3.11 is recommended): https://www.python.org/downloads/
+
+### Installation
+```
+git clone https://github.com/ageorge95/pyInfinex pyInfinex
+cd pyInfinex
+install.bat
+```
+
+# Feedback/ Contribution
 
 If you are stuck/ need more details on how to use any of the API functions you can join Infinex's official Discord server: https://discord.gg/4U8p99NBn7
 
