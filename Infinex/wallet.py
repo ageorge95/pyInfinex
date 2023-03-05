@@ -1,5 +1,6 @@
 from logging import getLogger
-from typing import AnyStr
+from typing import AnyStr,\
+    List
 from Infinex.network_wrappers import API_call
 from Infinex.utils import check_API_key
 
@@ -102,11 +103,12 @@ class PrivateWallet():
 
     @check_API_key
     def wallet_balances(self,
-                        search: AnyStr = None,
+                        symbols: List = None,
                         max_retries: int = 1):
         '''
         Will return all the assets trading on the exchange;
          Takes into account the 50 elements length limit.
+        :param symbols:
         :param max_retries:
         :return:
         '''
@@ -118,10 +120,13 @@ class PrivateWallet():
         offset = 0
 
         def return_data(offset):
-            to_return = {'offset': offset,
-                         'api_key': self.API_key}
-            if search:
-                to_return['search'] = search
+            to_return = {'api_key': self.API_key}
+
+            if symbols:
+                to_return['symbols'] = symbols
+            else:
+                # symbols and offset cannot be used at the same time
+                to_return['offset'] = offset
             return to_return
 
         while True:

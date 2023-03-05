@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # pprint(API_obj.wallet_balances())
 
     # get a certain asset balance
-    # pprint(API_obj.wallet_balances(search='BPX'))
+    # pprint(API_obj.wallet_balances(symbols=['BTC','USDT']))
 
     # get all the DEPOSIT transactions
     # pprint(API_obj.wallet_transactions(type='DEPOSIT'))
