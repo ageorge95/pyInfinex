@@ -2,3 +2,5 @@
 *.pyc
 /.__runtime_log.lock
 /runtime_log.log
+/venv
+/activate.bat
