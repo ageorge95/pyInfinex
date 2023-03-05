@@ -12,6 +12,12 @@ Python wrapper for the Infinex crypto exchange API
 
 - Official API documentation: https://github.com/infinex-exchange/api-docs
 
+# How to get help
+
+If you are stuck/ need more details on how to use any of the API functions you can join Infinex's official Discord server: https://discord.gg/4U8p99NBn7
+
+Or you can directly create an issue on this repository and I will answer ASAP.
+
 # Support
 Found this project useful? Send your ❤ in any form you can 🙂. Please contact me if you donated and want to be added to the contributors list !
 - apple APPLE---apple1tdscevmlwa03rt464mr03tf6qs6y2xm3ay4z9lzn9pshad6jkp2s4crqd9
