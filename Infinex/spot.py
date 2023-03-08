@@ -1,5 +1,6 @@
 from logging import getLogger
-from typing import AnyStr
+from typing import AnyStr,\
+    Literal
 from time import sleep
 from Infinex.network_wrappers import API_call
 from Infinex.utils import check_API_key,\
@@ -166,7 +167,7 @@ class PrivateSpot():
                        total: AnyStr = None,
                        time_in_force: AnyStr = 'GTC',
                        max_retries: int = 1,
-                       return_matched_order: bool = True):
+                       resp_type: Literal["NONE", "ACK", "RESULT"] = "ACK"):
 
         added_url = r'spot/open_orders/new'
 
@@ -184,7 +185,9 @@ class PrivateSpot():
                          'pair': pair,
                          'side': side,
                          'type': type,
-                         'time_in_force': time_in_force}
+                         'time_in_force': time_in_force,
+                         'resp_type': resp_type
+                         }
             # some sanity checks
             if price and type == 'MARKET':
                 self._log.error(f"You specified a price and a MARKET type order. That does not make sense."
@@ -215,20 +218,7 @@ class PrivateSpot():
                                        data=processed_input,
                                        max_retries=max_retries).send()
 
-        if return_matched_order and post_order_response['API_call_success'] and post_order_response['data']['success']:
-            processed_input.pop('api_key')
-            processed_input.pop('time_in_force')
-            # order matching is by default a blocking call
-            while True:
-                matched_order_response = self.match_order_open(**processed_input)
-                if matched_order_response['API_call_success'] and matched_order_response['data']['success']:
-                    return matched_order_response
-                else:
-                    self._log.warning(f'Could not match your newly created order :( {processed_input}')
-                    sleep(5)
-
-        else:
-            return post_order_response
+        return post_order_response
 
     @check_API_key
     def match_order_open(self,
