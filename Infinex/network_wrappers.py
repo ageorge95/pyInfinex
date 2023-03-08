@@ -2,6 +2,7 @@ from requests import get
 from typing import AnyStr,\
     Dict
 from logging import getLogger
+from traceback import format_exc
 
 class API_call():
     def __init__(self,
@@ -28,6 +29,7 @@ class API_call():
             except:
                 self._log.error(f'Failed to send an API call to {self.final_URL} at retry attempt {current_retry + 1}/{self.max_retries}')
                 current_retry += 1
+                self._log.error(format_exc(chain=False))
 
         return {'API_call_success': False,
                 'data': None}
