@@ -77,10 +77,10 @@ class PrivateSpot():
             if response['API_call_success']:
                 if response['data']['success']:
                     current_orders = response['data']['orders']
+
                     orders += current_orders
                     if len(current_orders) >= max_response_len:
 
-                        offset += max_response_len
                         # allow a maximum offset to be given to this method
                         # return what data we have if the max offset has been reached
                         offset += max_response_len
