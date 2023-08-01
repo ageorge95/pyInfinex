@@ -240,32 +240,42 @@ class PrivateSpot():
         if obid:
             obid = int(obid)
 
-        my_open_orders_response = self.my_open_orders(filter_pair = pair,
-                                                      starting_offset = starting_offset,
-                                                      max_offset = max_offset)
-        if my_open_orders_response['API_call_success']:
-            if my_open_orders_response['data']['success']:
-                current_order_matches = list(filter(lambda _:_['side'] == side
-                                                             and _['type'] == type
-                                                             and _['amount'] == amount
-                                                             and _['price'] == price
-                                                             and ((_['obid'] == obid ) if obid else True),
-                                                    my_open_orders_response['data']['orders']))
-                # return the matched order
-                if len(current_order_matches):
-                    data = {'success': True}
-                    data.update(current_order_matches[0])
-                    return {'API_call_success': True,
-                            'data': data,
-                            'final_offset': my_open_orders_response['final_offset']}
+        start = starting_offset
+        end = starting_offset + 50
 
-            # the order could not be matched because it does not exist
-            return {'API_call_success': True,
-                    'data': {'success': False}}
-        else:
-            # the order could not be matched because of network errors
-            return {'API_call_success': False,
-                    'data': {'success': False}}
+        while True:
+            my_open_orders_response = self.my_open_orders(filter_pair = pair,
+                                                          starting_offset = start,
+                                                          max_offset = end)
+
+            if my_open_orders_response['API_call_success']:
+                if my_open_orders_response['data']['success']:
+                    current_order_matches = list(filter(lambda _:_['side'] == side
+                                                                 and _['type'] == type
+                                                                 and _['amount'] == amount
+                                                                 and _['price'] == price
+                                                                 and ((_['obid'] == obid ) if obid else True),
+                                                        my_open_orders_response['data']['orders']))
+                    # return the matched order
+                    if len(current_order_matches):
+                        data = {'success': True}
+                        data.update(current_order_matches[0])
+                        return {'API_call_success': True,
+                                'data': data,
+                                'final_offset': my_open_orders_response['final_offset']}
+            else:
+                # the order could not be matched because of network errors
+                return {'API_call_success': False,
+                        'data': {'success': False}}
+
+            start += 50
+            end += 50
+            if end > max_offset or not my_open_orders_response['data']['orders']:
+                break
+
+        # the order could not be matched because it does not exist
+        return {'API_call_success': True,
+                'data': {'success': False}}
 
     @check_API_key
     def match_order_closed(self,
@@ -287,32 +297,43 @@ class PrivateSpot():
         if obid:
             obid = int(obid)
 
-        my_order_history_response = self.my_orders_history(filter_pair = pair,
-                                                           starting_offset = starting_offset,
-                                                           max_offset = max_offset)
-        if my_order_history_response['API_call_success']:
-            if my_order_history_response['data']['success']:
-                current_order_matches = list(filter(lambda _:_['side'] == side
-                                                             and _['type'] == type
-                                                             and _['amount'] == amount
-                                                             and _['price'] == price
-                                                             and ((_['obid'] == obid )if obid else True),
-                                                    my_order_history_response['data']['orders']))
-                # return the matched order
-                if len(current_order_matches):
-                    data = {'success': True}
-                    data.update(current_order_matches[0])
-                    return {'API_call_success': True,
-                            'data': data,
-                            'final_offset': my_order_history_response['final_offset']}
+        start = starting_offset
+        end = starting_offset + 50
 
-            # the order could not be matched because it does not exist
-            return {'API_call_success': True,
-                    'data': {'success': False}}
-        else:
-            # the order could not be matched because of network errors
-            return {'API_call_success': False,
-                    'data': {'success': False}}
+        while True:
+
+            my_order_history_response = self.my_orders_history(filter_pair = pair,
+                                                               starting_offset = starting_offset,
+                                                               max_offset = max_offset)
+            if my_order_history_response['API_call_success']:
+                if my_order_history_response['data']['success']:
+                    current_order_matches = list(filter(lambda _:_['side'] == side
+                                                                 and _['type'] == type
+                                                                 and _['amount'] == amount
+                                                                 and _['price'] == price
+                                                                 and ((_['obid'] == obid )if obid else True),
+                                                        my_order_history_response['data']['orders']))
+                    # return the matched order
+                    if len(current_order_matches):
+                        data = {'success': True}
+                        data.update(current_order_matches[0])
+                        return {'API_call_success': True,
+                                'data': data,
+                                'final_offset': my_order_history_response['final_offset']}
+
+            else:
+                # the order could not be matched because of network errors
+                return {'API_call_success': False,
+                        'data': {'success': False}}
+
+            start += 50
+            end += 50
+            if end > max_offset or not my_order_history_response['data']['orders']:
+                break
+
+        # the order could not be matched because it does not exist
+        return {'API_call_success': True,
+                'data': {'success': False}}
 
     @check_API_key
     def match_order_all(self,
@@ -323,7 +344,7 @@ class PrivateSpot():
                         price: AnyStr,
                         obid: AnyStr = None,
                         starting_offset: int = 0,
-                        max_offset: int = 200
+                        max_offset: int = 999999
                         ):
 
         # some safe checks
