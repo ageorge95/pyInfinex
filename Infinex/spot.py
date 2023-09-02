@@ -391,6 +391,15 @@ class PrivateSpot():
         :param obid:
         :param max_retries:
         :return:
+
+        Data return example:
+
+        - cancel request received by Infinex's backend
+        {'API_call_success': True, 'data': {'success': True}}
+        cancel request failed due to order not existing
+
+        - cancel request "failed" because the obid does not exist
+        {'API_call_success': True,'data': {'error': 'Order not found', 'success': False}}
         '''
 
         added_url = r'spot/open_orders/cancel'
