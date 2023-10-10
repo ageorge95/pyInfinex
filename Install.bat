@@ -27,4 +27,6 @@ echo Refer to EXAMPLE.py on how to actually use the API endpoints.
 echo.
 echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+pause
+
 deactivate
